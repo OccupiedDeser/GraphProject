@@ -1,5 +1,6 @@
 #include "extra.h"
 #include <stdio.h>
+#include <stdlib.h>
 
 void initStack(S_Stack** S_pointer)
 {
@@ -85,4 +86,51 @@ int isQueueFull(S_Queue* Q)
 void deleteQueue(S_Queue* Q)
 {
     free(Q);
+}
+
+int strcmp(char* a, char* b)
+{
+    int i, flag = 0;
+    for (i = 0; a[i] != '\0' && b[i] != '\0'; i++) {
+        if (a[i] != b[i]) {
+            flag = a[i] - b[i];
+            break;
+        }
+    }
+    if (a[i] == '\0' || b[i] == '\0') {
+        flag = a[i] - b[i];
+    }
+    return flag;
+}
+
+int itoa(int x, char* str)
+{
+    if (x == 0) {
+        str[0] = '0';
+        return 1;
+    }
+
+    int i = 0, top = -1;
+    char _stack[10];
+    while (x != 0) {
+        top++;
+        _stack[top] = x % 10 + '0';
+    }
+    while (top > -1) {
+        str[i] = _stack[top];
+        i++;
+        top--;
+    }
+    str[i] = '\0';
+    return i;
+}
+
+int strcpy(char* dest, char* source)
+{
+    int i;
+    for (i = 0; source[i] != '\0'; i++) {
+        dest[i] = source[i];
+    }
+    dest[i] = '\0';
+    return i;
 }
