@@ -131,6 +131,6 @@ int strcpy(char* dest, char* source)
     for (i = 0; source[i] != '\0'; i++) {
         dest[i] = source[i];
     }
-    str[i] = '\0';
+    dest[i] = '\0';
     return i;
 }
