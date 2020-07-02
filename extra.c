@@ -121,6 +121,7 @@ int itoa(int x, char* str)
         i++;
         top--;
     }
+    str[i] = '\0';
     return i;
 }
 
