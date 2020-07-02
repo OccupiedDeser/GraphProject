@@ -107,6 +107,7 @@ int itoa(int x, char* str)
 {
     if (x == 0) {
         str[0] = '0';
+        str[1] = '\0';
         return 1;
     }
 
@@ -121,6 +122,7 @@ int itoa(int x, char* str)
         i++;
         top--;
     }
+    str[i] = '\0';
     return i;
 }
 
@@ -130,5 +132,6 @@ int strcpy(char* dest, char* source)
     for (i = 0; source[i] != '\0'; i++) {
         dest[i] = source[i];
     }
+    dest[i] = '\0';
     return i;
 }

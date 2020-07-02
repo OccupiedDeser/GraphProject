@@ -1,4 +1,5 @@
 #include "search.h"
+#include "extra.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -93,14 +94,14 @@ char* shortestPath(int u, int v, char algorithm[], char name[])
             _stack[stack_top] = i;
         }
         char* ret = (char*)malloc((11 * (stack_top + 3)) * sizeof(char));
-        int i = int_to_str(u, ret);
+        int i = itoa(u, ret);
         while (stack_top > -1) {
             i += strcpy(ret + i, " -> ");
-            i += int_to_str(_stack[stack_top], ret + i);
+            i += itoa(_stack[stack_top], ret + i);
             stack_top--;
         }
         i += strcpy(ret + i, "\ncost: ");
-        i += int_to_str(min_dis, ret + i);
+        i += itoa(min_dis, ret + i);
         ret[i] = '\0';
         free(path);
         free(_stack);
@@ -158,49 +159,4 @@ int get_weight(AdjList* g, int u, int v)
         }
     }
     return INF;
-}
-
-int strcmp(char* a, char* b)
-{
-    int i, flag = 0;
-    for (i = 0; a[i] != '\0' && b[i] != '\0'; i++) {
-        if (a[i] != b[i]) {
-            flag = a[i] - b[i];
-            break;
-        }
-    }
-    if (a[i] == '\0' || b[i] == '\0') {
-        flag = a[i] - b[i];
-    }
-    return flag;
-}
-
-int int_to_str(int x, char* str)
-{
-    if (x == 0) {
-        str[0] = '0';
-        return 1;
-    }
-
-    int i = 0, top = -1;
-    char _stack[10];
-    while (x != 0) {
-        top++;
-        _stack[top] = x % 10 + '0';
-    }
-    while (top > -1) {
-        str[i] = _stack[top];
-        i++;
-        top--;
-    }
-    return i;
-}
-
-int strcpy(char* dest, char* source)
-{
-    int i;
-    for (i = 0; source[i] != '\0'; i++) {
-        dest[i] = source[i];
-    }
-    return i;
 }
