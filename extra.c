@@ -88,7 +88,7 @@ void deleteQueue(S_Queue* Q)
     free(Q);
 }
 
-int strcmp(char* a, char* b)
+int extra_strcmp(char* a, char* b)
 {
     int i, flag = 0;
     for (i = 0; a[i] != '\0' && b[i] != '\0'; i++) {
@@ -103,7 +103,7 @@ int strcmp(char* a, char* b)
     return flag;
 }
 
-int itoa(int x, char* str)
+int extra_itoa(int x, char* str)
 {
     if (x == 0) {
         str[0] = '0';
@@ -116,6 +116,7 @@ int itoa(int x, char* str)
     while (x != 0) {
         top++;
         _stack[top] = x % 10 + '0';
+        x /= 10;
     }
     while (top > -1) {
         str[i] = _stack[top];
@@ -126,7 +127,7 @@ int itoa(int x, char* str)
     return i;
 }
 
-int strcpy(char* dest, char* source)
+int extra_strcpy(char* dest, char* source)
 {
     int i;
     for (i = 0; source[i] != '\0'; i++) {

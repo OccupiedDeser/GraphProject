@@ -30,9 +30,9 @@ void enQueue(Pnode d, S_Queue* S);
 Pnode deQueue(S_Queue* S);
 void deleteQueue(S_Queue* Q);
 
-int strcmp(char* a, char* b);               //字符串比较
-int itoa(int x, char* str);                 //把一个整数写入字符串中，返回写入的长度
-int strcpy(char* dest, char* source);       //字符串复制，返回复制的长度
+int extra_strcmp(char* a, char* b);               //字符串比较
+int extra_itoa(int x, char* str);                 //把一个整数写入字符串中，返回写入的长度
+int extra_strcpy(char* dest, char* source);       //字符串复制，返回复制的长度
 
 
 #endif
