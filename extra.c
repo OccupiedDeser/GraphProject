@@ -1,4 +1,5 @@
 #include "extra.h"
+#include "search.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -136,7 +137,6 @@ int extra_strcpy(char* dest, char* source)
     dest[i] = '\0';
     return i;
 }
-<<<<<<< HEAD
 
 int cmp(const void* a, const void* b)
 {
@@ -148,5 +148,3 @@ int cmp(const void* a, const void* b)
         return x[1] - y[1];
     }
 }
-=======
->>>>>>> f22eee46b4247fa35e110ac97d9f57fe3070e4b1
