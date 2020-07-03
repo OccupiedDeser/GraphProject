@@ -8,7 +8,7 @@ void initStack(S_Stack** S_pointer)
     (*S_pointer)->top = -1;
 }
 
-void push(Pnode d, S_Stack* S)
+void push(int d, S_Stack* S)
 {
     if (!isStackFull(S)) {
         S->top++;
@@ -18,14 +18,14 @@ void push(Pnode d, S_Stack* S)
     }
 }
 
-Pnode pop(S_Stack* S)
+int pop(S_Stack* S)
 {
     if (!isStackEmpty(S)) {
         S->top--;
         return S->data[S->top + 1];
     } else {
         printf("空栈");
-        Pnode error = { -1, -1 };
+        int error = { -1 };
         return error;
     }
 }
@@ -51,7 +51,7 @@ void initQueue(S_Queue** Q_pointer)
     (*Q_pointer)->front = (*Q_pointer)->rear = 0;
 }
 
-void enQueue(Pnode d, S_Queue* Q)
+void enQueue(int d, S_Queue* Q)
 {
     if (!isQueueFull(Q)) {
         Q->data[Q->rear] = d;
@@ -61,14 +61,14 @@ void enQueue(Pnode d, S_Queue* Q)
     }
 }
 
-Pnode deQueue(S_Queue* Q)
+int deQueue(S_Queue* Q)
 {
     if (!isQueueEmpty(Q)) {
         Q->front++;
         return Q->data[Q->front - 1];
     } else {
         printf("空队列");
-        Pnode error = { -1, -1 };
+        int error = { -1, -1 };
         return error;
     }
 }
@@ -88,7 +88,7 @@ void deleteQueue(S_Queue* Q)
     free(Q);
 }
 
-int strcmp(char* a, char* b)
+int extra_strcmp(char* a, char* b)
 {
     int i, flag = 0;
     for (i = 0; a[i] != '\0' && b[i] != '\0'; i++) {
@@ -103,10 +103,11 @@ int strcmp(char* a, char* b)
     return flag;
 }
 
-int itoa(int x, char* str)
+int extra_itoa(int x, char* str)
 {
     if (x == 0) {
         str[0] = '0';
+        str[1] = '\0';
         return 1;
     }
 
@@ -115,6 +116,7 @@ int itoa(int x, char* str)
     while (x != 0) {
         top++;
         _stack[top] = x % 10 + '0';
+        x /= 10;
     }
     while (top > -1) {
         str[i] = _stack[top];
@@ -125,7 +127,7 @@ int itoa(int x, char* str)
     return i;
 }
 
-int strcpy(char* dest, char* source)
+int extra_strcpy(char* dest, char* source)
 {
     int i;
     for (i = 0; source[i] != '\0'; i++) {

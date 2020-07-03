@@ -1,7 +1,7 @@
 #ifndef _SEARCH_H_
 #define _SEARCH_H_
 
-#define MAXV 1000000
+#define MAXV 100000000
 #define DBL_MAX 1.7976931348623157e+308
 
 typedef struct Anode {      //边
@@ -14,7 +14,7 @@ typedef struct Vnode {      //顶点
     Arc* firstarc;          //第一条边
 } Vertex;
 
-typedef struct {            //邻接表
+typedef struct AL{            //邻接表
     Vertex adjlist[MAXV];   //邻接表
     int n;                  //顶点数
     int e;                  //边数
@@ -27,5 +27,7 @@ void delete_AL(AdjList* g);
 
 char* DFS(int u, int v, AdjList* graph);
 char* BFS(int u, int v, AdjList* graph);
+void AdjList_Split_Point(AdjList* graph); //拆点，将所有节点拆为权值为1的点
+void AdjList_Merge_Point(AdjList* graph);
 
 #endif
