@@ -272,7 +272,8 @@ char* shortestPath(int u, int v, char algorithm[], char name[])
         free(_stack);
         return ret;
     } else {
-        return "ERROR: Invalid Algorithm\n";
+        printf("ERROR: Invalid Algorithm\n");
+        return NULL;
     }
 }
 

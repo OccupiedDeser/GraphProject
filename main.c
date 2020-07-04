@@ -32,7 +32,7 @@ int main(int argc, char* argv[])
                 } else if (extra_strcmp(argv[4], "vertices") == 0) {
                     printf("number of vertices is: %d\n\n", numberOfVertices(argv[2]));
                 } else if (extra_strcmp(argv[4], "freeman") == 0) {
-                    printf("Freeman Network Centrality: %f\n", freemanNetworkCentrality(argv[2]));
+                    printf("Freeman Network Centrality: %f\n\n", freemanNetworkCentrality(argv[2]));
                 }
                 // else if (extra_strcmp(argv[4], "closeness") == 0) {
                 //     printf("%d", closenessCentrality(argv[2]));
@@ -46,6 +46,7 @@ int main(int argc, char* argv[])
                 if (u == -1 || v == -1) {
                     printf("Illegal input number!\n\n");
                 } else {
+                    printf("please wait for a while......\n\n");
                     char* ret = shortestPath(u, v, argv[4], argv[2]);
                     if (ret == NULL) {
                         printf("GG: unable to reach Suantou's castle! Cyber Security Continent is deystroyed\n");
