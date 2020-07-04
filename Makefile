@@ -1,22 +1,17 @@
-# search-cli: main.o
-# 	cc -o search-cli main.o
+search-cli: main.o search.o stats.o extra.o
+	gcc -o search-cli main.o search.o stats.o extra.o
 
-# main.o:
-# 	cc -c main.c search.c stats.c
+main.o: main.c
+	gcc -c main.c
 
-# clean:
+search.o: search.c
+	gcc -c search.c
 
-CC = gcc
+stats.o: stats.c
+	gcc -c stats.c
 
-CFLAGS = -g -Wall
-
-.PHONY: clean
-
-search-cli: main.o
-	$(CC) $(CFLAGS) -o search-cli main.o
-
-main.o: 
-	$(CC) $(CFLAGS) -c -o main.o main.c search.c stats.c extra.c
+extra.o: extra.c
+	gcc -c extra.c
 
 clean:
-	rm -f main.o search-cli
+	rm *.o search-cli

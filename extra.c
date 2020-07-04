@@ -1,4 +1,5 @@
 #include "extra.h"
+#include "search.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -68,8 +69,7 @@ int deQueue(S_Queue* Q)
         return Q->data[Q->front - 1];
     } else {
         printf("空队列");
-        int error = { -1, -1 };
-        return error;
+        int error = -1;
     }
 }
 
