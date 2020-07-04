@@ -109,7 +109,6 @@ char* BFS(int u, int v, AdjList* graph)
     Arc* Arc_pointer;
     while (!isQueueEmpty(Q)) {
         p = pos = deQueue(Q);
-        visit[pos] = 1;
         Arc_pointer = graph->adjlist[pos].firstarc;
         while (Arc_pointer != NULL) {
             if (!visit[Arc_pointer->adjvex]) {
@@ -119,6 +118,7 @@ char* BFS(int u, int v, AdjList* graph)
                 }
                 pos = Arc_pointer->adjvex;
                 enQueue(pos, Q);
+                visit[pos] = 1;
             }
             Arc_pointer = (Arc*)(Arc_pointer->nextarc);
         }
