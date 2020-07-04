@@ -10,7 +10,7 @@ int main(int argc, char* argv[])
     FILE* fp = NULL;
 
     if (extra_strcmp(argv[1], "-h") == 0 || extra_strcmp(argv[1], "--help") == 0) {
-        printf("-h/--help:\n\tdisplay command list\n");
+        printf("\n-h/--help:\n\tdisplay command list\n");
         printf("-g/--graph _FILE:\n");
         printf("\t-s/--stats edges: display number of edges\n");
         printf("\t-s/--stats vertices: display number of vertices\n");
@@ -28,11 +28,11 @@ int main(int argc, char* argv[])
             fclose(fp);
             if (extra_strcmp(argv[3], "-s") == 0 || extra_strcmp(argv[3], "--stats") == 0) {
                 if (extra_strcmp(argv[4], "edges") == 0) {
-                    printf("number of edges is: %d\n\n", numberOfEdges(argv[2]));
+                    printf("\nnumber of edges is: %d\n\n", numberOfEdges(argv[2]));
                 } else if (extra_strcmp(argv[4], "vertices") == 0) {
-                    printf("number of vertices is: %d\n\n", numberOfVertices(argv[2]));
+                    printf("\nnumber of vertices is: %d\n\n", numberOfVertices(argv[2]));
                 } else if (extra_strcmp(argv[4], "freeman") == 0) {
-                    printf("Freeman Network Centrality: %f\n\n", freemanNetworkCentrality(argv[2]));
+                    printf("\nFreeman Network Centrality is: %f\n\n", freemanNetworkCentrality(argv[2]));
                 }
                 // else if (extra_strcmp(argv[4], "closeness") == 0) {
                 //     printf("%d", closenessCentrality(argv[2]));
@@ -46,12 +46,12 @@ int main(int argc, char* argv[])
                 if (u == -1 || v == -1) {
                     printf("Illegal input number!\n\n");
                 } else {
-                    printf("please wait for a while......\n\n");
+                    printf("\nplease wait for a while......\n\n");
                     char* ret = shortestPath(u, v, argv[4], argv[2]);
                     if (ret == NULL) {
                         printf("GG: unable to reach Suantou's castle! Cyber Security Continent is deystroyed\n");
                     } else {
-                        printf("%s\n", ret);
+                        printf("%s\n\n", ret);
                     }
                     free(ret);
                 }

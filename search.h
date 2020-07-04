@@ -22,7 +22,8 @@ typedef struct AL{          //邻接表
 } AdjList;
 
 char* shortestPath(int u, int v, char algorithm[], char name[]);    //找出从点u到点v的最短路径
-void Dijkstra(int u, int v, AdjList* g, int* dist, int* path);            //找出从点u到各个顶点的最短路径
+char* call_Dijk(int u, int v, AdjList* g);
+void Dijkstra(int u, int v, AdjList* g, int* dist, int* path); //找出从点u到各个顶点的最短路径
 AdjList* create_AL(char name[]);            //建立邻接表
 void delete_AL(AdjList* g);                 //删除邻接表
 int get_weight(AdjList* g, int u, int v);   //求出两个顶点间边的权值
