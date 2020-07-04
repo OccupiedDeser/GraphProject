@@ -136,3 +136,56 @@ int extra_strcpy(char* dest, char* source)
     dest[i] = '\0';
     return i;
 }
+
+int extra_atoi(char* str)
+{
+    int ret = 0;
+    for (int i = 0; str[i] != '\0'; i++) {
+        if (str[i] > '9' || str[i] < '0') {
+            return -1;
+        }
+        ret = 10 * ret + str[i] - '0';
+    }
+    return ret;
+}
+
+void draw_garlic()
+{
+    printf("\n");
+    printf("                                          ..\'\'.                           \n");
+    printf("                                      .:xKNNKKXXOd;                       \n");
+    printf("                                    ;ONOooXd\'   .l0X.                     \n");
+    printf("                                 .o0x,     ,dNNK0OXX.                     \n");
+    printf("                               .k0l          .OKo,.                       \n");
+    printf("                              ,0c          .kx\'                           \n");
+    printf("                             cX:         .xO.                             \n");
+    printf("                            cNc         ;O,                               \n");
+    printf("                         . \'NN;        kXlc\'                              \n");
+    printf("               .,cdkKNNXWNKKKWK.  .\',:xOdd0NNK0O0NNNKdoo:\'.               \n");
+    printf("           ,okOdlc;,..       .O.            .:o0d.   . ..\';cddo,          \n");
+    printf("        ;k0o.                ;c.;      ..       .:cl           :0d\'       \n");
+    printf("      ;K0;.                  Odo.      ;d          \'d\'           cNd      \n");
+    printf("     xX:                   .o:          X            ,:           \'Xx     \n");
+    printf("   .K0.                   ::            X;             :.          \'Nd    \n");
+    printf("  .KO                   ,c              Ox              ;.          xW;   \n");
+    printf("  ON.                 ,k:               xk               ;,         ;Wd   \n");
+    printf(" ,WO                ,k;                 xd                k.        .NX   \n");
+    printf(" xWl              \'OW:                  d:                k\'         XW.  \n");
+    printf(" 0M;            ,kdNX                   k\'                x.         kW.  \n");
+    printf(" KW:           :c kW;                   0.                k          kW.  \n");
+    printf(" kM,             .Xk       \'ldxkxk0xddx0koddxdd:.         k          0W.  \n");
+    printf(" ,N0.            :N.    :OW0o:,....           .c0x.      c;         .NX   \n");
+    printf("  lX:            k0   lXx;                       lK      k          OW.   \n");
+    printf("  .oXX,          Kk  .Nc    ..   ;x   x\'    .;   .N.    0:         oWd    \n");
+    printf("    \'XWd.        0O  ;K   \'OO0Oc.oK   xk.\':x00x. .N.   d:        .kN;     \n");
+    printf("     .0WN,       .0  ,N.  o.   ;okc   .doc,.  .  lk   :;        cNk.      \n");
+    printf("       dWWk.      :l  0l                         K;  .;       .O0\'        \n");
+    printf("        .dWWl      0. .K:          .   .   .K\'  .X.  \'      .dO,          \n");
+    printf("          .OWXc.   ;0  .Oo    ko .x00.KXo :Kc   ok   ,.   .xO\'            \n");
+    printf("            .oXWk:. co . d0.   KOk\' ON: xXl    lK. cd  .lOo.              \n");
+    printf("               .:xKN0XdX0okX;  ..    .       \'0o,o0dcdOo.                 \n");
+    printf("                    .,:; .lONxc,.         ..xWXNX0kkl.                    \n");
+    printf("                             ..;oxdxkxddxx0oxxo:.                         \n");
+    printf("\n\n");
+    return;
+}

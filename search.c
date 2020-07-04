@@ -77,6 +77,10 @@ char* shortestPath(int u, int v, char algorithm[], char name[])
         delete_AL(g);
     } else if (extra_strcmp(algorithm, "Dijkstra") == 0) {
         AdjList* g = create_AL(name);
+        if (u>g->n||v>g->n){
+            delete_AL(g);
+            return NULL;
+        }
         int* dist = (int*)malloc(g->n * sizeof(int));
         int* path = (int*)malloc(g->n * sizeof(int));
         Dijkstra(u, v, g, dist, path);
@@ -90,7 +94,7 @@ char* shortestPath(int u, int v, char algorithm[], char name[])
             if (path[i] == -1) {
                 free(path);
                 free(_stack);
-                return "GG: unable to reach Suantou's castle! Cyber Security Continent is deystroyed\n";
+                return NULL;
             }
             stack_top++;
             _stack[stack_top] = i;
@@ -117,8 +121,9 @@ char* shortestPath(int u, int v, char algorithm[], char name[])
 void Dijkstra(int u, int v, AdjList* g, int* dist, int* path)
 {
     int min_dis, i, j, to_add, new_dis;
-    int stop_flag = 0;      //没有必要做完完整的Dijkstra，找到v点就可以退出
+    int stop_flag = 0; //没有必要做完完整的Dijkstra，找到v点就可以退出
     int* s = (int*)malloc(g->n * sizeof(int));
+    Arc* p = NULL;
     for (i = 0; i <= g->n; i++) {
         dist[i] = get_weight(g, u, i); //距离初始化
         s[i] = 0; //状态均置为"未加入s"
@@ -144,17 +149,19 @@ void Dijkstra(int u, int v, AdjList* g, int* dist, int* path)
         }
         s[to_add] = 1; //顶点to_add加入S中
         //printf("add point %d, i = %d\n", to_add, i);
-        if (to_add == v) {   //已经找到了到v的最短路径，可以退出Dijkstra
+        if (to_add == v) { //已经找到了到v的最短路径，可以退出Dijkstra
             break;
         }
-        for (j = 0; j <= g->n; j++) { //调整剩余顶点信息
-            if (s[j] == 0) {
-                new_dis = get_weight(g, to_add, j);
-                if (new_dis < INF && dist[to_add] + new_dis < dist[j]) {
-                    dist[j] = dist[to_add] + new_dis;
-                    path[j] = to_add;
+        p = g->adjlist[to_add].firstarc; //调整剩余顶点信息。只需要考察新加入点的相邻点
+        while (p != NULL) {
+            if (s[p->adjvex] == 0) {
+                new_dis = p->wei;
+                if (dist[to_add] + new_dis < dist[p->adjvex]) {
+                    dist[p->adjvex] = dist[to_add] + new_dis;
+                    path[p->adjvex] = to_add;
                 }
             }
+            p = p->nextarc;
         }
     }
     //printf("%d is the %dst point added\n", v, i);
@@ -175,17 +182,4 @@ int get_weight(AdjList* g, int u, int v)
         }
     }
     return INF;
-}
-
-int main()
-{
-    printf("Hello World\n");
-    // int i = max_Vertice("test.txt");
-    // int j = numberOfVertices("test.txt");
-    // printf("%d %d\n", i, j);
-    //char* short_path = shortestPath(0, 1, "Dijkstra", "dummy_test.txt");
-    char* short_path = shortestPath(2, 34372, "Dijkstra", "test.txt");
-    printf("%s", short_path);
-    free(short_path);
-    return 0;
 }
