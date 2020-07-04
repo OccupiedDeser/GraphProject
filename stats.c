@@ -1,7 +1,9 @@
 #include "stats.h"
+#include "extra.h"
 #include "search.h"
 #include <stdio.h>
 #include <stdlib.h>
+#define MAXA 2000000
 
 int numberOfVertices(char name[])
 {
@@ -54,16 +56,48 @@ int numberOfEdges(char name[])
     return edge_count;
 }
 
-float freemanNetworkCentrality(char name[], int node)
+float freemanNetworkCentrality(char name[])
 {
     FILE* fp = fopen(name, "r");
-    int u, v, w;
-    float degree_Centrality = 0;
+    int u, v, w, num = 0, node_num;
+    // int graph[MAXA * 2][2];
+    int* graph = (int*)malloc(2 * MAXA * sizeof(int));
     while (fscanf(fp, "%d %d %d", &u, &v, &w) != EOF) {
-        if (u == node || v == node) {
-            degree_Centrality += 1;
+        graph[num * 2] = u;
+        graph[num * 2 + 1] = v;
+        graph[(num + 1) * 2] = v;
+        graph[(num + 1) * 2 + 1] = u;
+        num += 2;
+        if (num >= MAXA) {
+            printf("超出最大处理范围");
+            return -1;
         }
     }
     fclose(fp);
+
+    node_num = 0;
+    qsort(graph, num, 2 * sizeof(int), cmp);
+    for (int i = 0; i < num; i++) {
+        if (i != 0 && graph[i * 2] != graph[(i - 1) * 2]) {
+            node_num++;
+        }
+    }
+    int maxCD = 0, CDi = 0;
+    float sumCD = 0;
+    for (int i = 0; i < num; i++) {
+        if (i == 0 || graph[i * 2] != graph[(i - 1) * 2]) {
+            sumCD += CDi; //i为0时，CDi == 0, sumCD的值没有改变
+            if (CDi > maxCD) {
+                maxCD = CDi;
+            }
+            CDi = 1;
+        } else {
+            if (graph[i * 2 + 1] != graph[(i - 1) * 2 + 1]) {
+                CDi++;
+            }
+        }
+    }
+    free(graph);
+    float degree_Centrality = (1.0 * node_num * maxCD - sumCD) / (1.0 * (node_num - 1) * (node_num - 2));
     return degree_Centrality;
 }
