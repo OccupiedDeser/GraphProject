@@ -8,7 +8,7 @@ void initStack(S_Stack** S_pointer)
     (*S_pointer)->top = -1;
 }
 
-void push(Pnode d, S_Stack* S)
+void push(int d, S_Stack* S)
 {
     if (!isStackFull(S)) {
         S->top++;
@@ -18,14 +18,14 @@ void push(Pnode d, S_Stack* S)
     }
 }
 
-Pnode pop(S_Stack* S)
+int pop(S_Stack* S)
 {
     if (!isStackEmpty(S)) {
         S->top--;
         return S->data[S->top + 1];
     } else {
         printf("空栈");
-        Pnode error = { -1, -1 };
+        int error = { -1 };
         return error;
     }
 }
@@ -51,7 +51,7 @@ void initQueue(S_Queue** Q_pointer)
     (*Q_pointer)->front = (*Q_pointer)->rear = 0;
 }
 
-void enQueue(Pnode d, S_Queue* Q)
+void enQueue(int d, S_Queue* Q)
 {
     if (!isQueueFull(Q)) {
         Q->data[Q->rear] = d;
@@ -61,14 +61,14 @@ void enQueue(Pnode d, S_Queue* Q)
     }
 }
 
-Pnode deQueue(S_Queue* Q)
+int deQueue(S_Queue* Q)
 {
     if (!isQueueEmpty(Q)) {
         Q->front++;
         return Q->data[Q->front - 1];
     } else {
         printf("空队列");
-        Pnode error = { -1, -1 };
+        int error = { -1, -1 };
         return error;
     }
 }
