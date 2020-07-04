@@ -4,18 +4,18 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int visit[MAXV] = { 0 };
 //返回的字符数组是malloc的，需要free
 char* DFS(int u, int v, AdjList* graph)
 {
     S_Stack* S;
     initStack(&S);
+    int* visit = (int*)malloc(MAXV * sizeof(int));
+    int* v_path = (int*)malloc(MAXV * sizeof(int));
     for (int i = 0; i < MAXV; i++) {
         visit[i] = 0;
     }
 
     double path_Weight; //当前路径权值总和
-    double min_Weight = DBL_MAX;
 
     //初始化，压入起点入栈
     int pos;
@@ -24,9 +24,10 @@ char* DFS(int u, int v, AdjList* graph)
     push(pos, S);
     Arc* Arc_pointer;
     int next = -1;
-    int v_path[MAXV], num = 0;
+
+    int num = 0;
     int p = u, count = 0, p_end = 0;
-    char* str_path = (char*)malloc(sizeof(char) * 10 * MAXV);
+    char* str_path = (char*)malloc(sizeof(char) * MAXV);
 
     while (!isStackEmpty(S)) {
         //回溯
@@ -34,9 +35,9 @@ char* DFS(int u, int v, AdjList* graph)
         Arc_pointer = graph->adjlist[pos].firstarc;
         if (next != -1) { //next为-1时，为起点，不是回溯
             while (Arc_pointer->adjvex != next) {
-                Arc_pointer = Arc_pointer->nextarc;
+                Arc_pointer = (Arc*)(Arc_pointer->nextarc);
             }
-            Arc_pointer = Arc_pointer->nextarc;
+            Arc_pointer = (Arc*)(Arc_pointer->nextarc);
         }
         while (Arc_pointer != NULL) {
             if (Arc_pointer->adjvex == v) {
@@ -55,7 +56,7 @@ char* DFS(int u, int v, AdjList* graph)
                 Arc_pointer = graph->adjlist[pos].firstarc;
                 visit[pos] = 1;
             } else {
-                Arc_pointer = Arc_pointer->nextarc;
+                Arc_pointer = (Arc*)(Arc_pointer->nextarc);
             }
         }
         //恢复pop出的节点为可访问
@@ -68,7 +69,9 @@ break_DFS_loop:
     deleteStack(S);
 
     if (num == 0) {
-        extra_strcpy(str_path, "Failed to find a path.");
+        free(str_path);
+        str_path = NULL;
+        // extra_strcpy(str_path, "Failed to find a path.");
     } else {
         p_end = extra_itoa(v_path[0], str_path);
         for (int i = 1; i < num; i++) {
@@ -76,6 +79,8 @@ break_DFS_loop:
             p_end += extra_itoa(v_path[i], str_path + p_end);
         }
     }
+    free(v_path);
+    free(visit);
     return str_path;
 }
 
@@ -85,6 +90,9 @@ char* BFS(int u, int v, AdjList* graph)
     AdjList_Split_Point(graph);
     S_Queue* Q;
     initQueue(&Q);
+    int* visit = (int*)malloc(MAXV * sizeof(int));
+    int* v_path = (int*)malloc(MAXV * sizeof(int));
+    int* pre = (int*)malloc(MAXV * sizeof(int));
     for (int i = 0; i < MAXV; i++) {
         visit[i] = 0;
     }
@@ -97,9 +105,7 @@ char* BFS(int u, int v, AdjList* graph)
 
     int p, count, p_end;
     char* str_path = (char*)malloc(sizeof(char) * MAXV);
-    int v_path[MAXV];
 
-    int pre[MAXV];
     Arc* Arc_pointer;
     while (!isQueueEmpty(Q)) {
         p = pos = deQueue(Q);
@@ -114,7 +120,7 @@ char* BFS(int u, int v, AdjList* graph)
                 pos = Arc_pointer->adjvex;
                 enQueue(pos, Q);
             }
-            Arc_pointer = Arc_pointer->nextarc;
+            Arc_pointer = (Arc*)(Arc_pointer->nextarc);
         }
     }
 exit_loop:
@@ -122,7 +128,8 @@ exit_loop:
     count = 0;
     p_end = 0;
     if (Arc_pointer == NULL) {
-        extra_strcpy(str_path, "Failed to find a path.");
+        free(str_path);
+        str_path = NULL;
     } else {
         while (p != u) {
             if (p > graph->n) {
@@ -145,6 +152,9 @@ exit_loop:
     }
     deleteQueue(Q);
     AdjList_Merge_Point(graph);
+    free(v_path);
+    free(visit);
+    free(pre);
     return str_path;
 }
 
@@ -172,7 +182,7 @@ AdjList* create_AL(char name[])
             g->adjlist[p1].firstarc = new;
         } else {
             p = g->adjlist[p1].firstarc;
-            for (; p->nextarc != NULL; p = p->nextarc) {
+            for (; p->nextarc != NULL; p = (Arc*)(p->nextarc)) {
                 if (p->adjvex == p2) {
                     repeated_arc = 1;
                     free(new);
@@ -186,7 +196,7 @@ AdjList* create_AL(char name[])
             if (repeated_arc == 1) {
                 continue;
             }
-            p->nextarc = new;
+            p->nextarc = (struct ANode*)new;
         }
         edges++;
     }
@@ -202,7 +212,7 @@ void delete_AL(AdjList* g)
     for (i = 0; i <= g->n; i++) {
         pre = g->adjlist[i].firstarc;
         while (pre != NULL) {
-            p = pre->nextarc;
+            p = (Arc*)(pre->nextarc);
             free(pre);
             pre = p;
         }
@@ -309,7 +319,7 @@ void Dijkstra(int u, int v, AdjList* g, int* dist, int* path)
                     path[p->adjvex] = to_add;
                 }
             }
-            p = p->nextarc;
+            p = (Arc*)(p->nextarc);
         }
     }
     //printf("%d is the %dst point added\n", v, i);
@@ -324,7 +334,7 @@ int get_weight(AdjList* g, int u, int v)
 {
     Arc* p;
     p = g->adjlist[u].firstarc;
-    for (; p != NULL; p = p->nextarc) {
+    for (; p != NULL; p = (Arc*)(p->nextarc)) {
         if (p->adjvex == v) {
             return p->wei;
         }
@@ -354,7 +364,7 @@ void AdjList_Split_Point(AdjList* graph)
                 Arc_pointer->adjvex = count;
                 Arc_pointer->wei = 1;
             }
-            Arc_pointer = Arc_pointer->nextarc;
+            Arc_pointer = (Arc*)(Arc_pointer->nextarc);
         }
     }
     count++;

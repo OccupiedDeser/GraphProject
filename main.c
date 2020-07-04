@@ -4,12 +4,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int main() //int argc, char* argv[]
+int main(int argc, char* argv[])
 {
     int a = 0;
-    char* argv[] = { "wrsfvsc", "-g", "test.txt", "-sp", "Dijkstra", "-u", "32421", "-v", "104372" };
     FILE* fp = NULL;
-    printf("Hello World\n");
+
     if (extra_strcmp(argv[1], "-h") == 0 || extra_strcmp(argv[1], "--help") == 0) {
         printf("-h/--help:\n\tdisplay command list\n");
         printf("-g/--graph _FILE:\n");
@@ -29,14 +28,16 @@ int main() //int argc, char* argv[]
             fclose(fp);
             if (extra_strcmp(argv[3], "-s") == 0 || extra_strcmp(argv[3], "--stats") == 0) {
                 if (extra_strcmp(argv[4], "edges") == 0) {
-                    //printf("number of edges is: %d\n\n", numberOfEdges(argv[2]));
+                    printf("number of edges is: %d\n\n", numberOfEdges(argv[2]));
                 } else if (extra_strcmp(argv[4], "vertices") == 0) {
                     printf("number of vertices is: %d\n\n", numberOfVertices(argv[2]));
                 } else if (extra_strcmp(argv[4], "freeman") == 0) {
-                    //printf("%d", freemanNetworkCentrality(argv[2]));
-                } else if (extra_strcmp(argv[4], "closeness") == 0) {
-                    //printf("%d", closenessCentrality(argv[2]));
-                } else {
+                    printf("Freeman Network Centrality: %f\n", freemanNetworkCentrality(argv[2]));
+                }
+                // else if (extra_strcmp(argv[4], "closeness") == 0) {
+                //     printf("%d", closenessCentrality(argv[2]));
+                // }
+                else {
                     printf("Invalid command!\nTry \"-h\" or \"--help\"\n\n");
                 }
             } else if (extra_strcmp(argv[3], "-sp") == 0 || extra_strcmp(argv[3], "--shortestpath") == 0) {

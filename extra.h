@@ -1,7 +1,7 @@
 #ifndef _EXTRA_H_
 #define _EXTRA_H_
 
-#define MAXCAPACITY 0xffffff
+#define MAXCAPACITY 200000000
 
 //栈
 typedef struct search_stack {
