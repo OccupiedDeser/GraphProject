@@ -10,15 +10,17 @@ int main(int argc, char* argv[])
     FILE* fp = NULL;
 
     if (extra_strcmp(argv[1], "-h") == 0 || extra_strcmp(argv[1], "--help") == 0) {
+        printf("\n<<==========================");
         printf("\n-h/--help:\n\tdisplay command list\n");
         printf("-g/--graph _FILE:\n");
         printf("\t-s/--stats edges: display number of edges\n");
         printf("\t-s/--stats vertices: display number of vertices\n");
-        printf("\t-s/--stats freeman: display freeman\n");
-        printf("\t-s/--stats closeness node_x: display closeness of node_x\n");
+        printf("\t-s/--stats freeman: display freeman network centrality of the graph\n");
+        printf("\t-s/--stats closeness node_x: display closeness centrality of node_x\n");
         printf("\t-sp/--shortestpath _ALG -u _START -v _TARGET:\n");
         printf("\t\tdisplay shortest path from _START to _TARGET with algorithm _ALG\n");
-        printf("-j:\n\tdisplay image of garlic monster\n\n");
+        printf("-j:\n\tdisplay image of garlic monster\n");
+        printf("==========================>>\n\n");
     } else if (extra_strcmp(argv[1], "-g") == 0 || extra_strcmp(argv[1], "--graph") == 0) {
         fp = fopen(argv[2], "r");
         if (fp == NULL) {
@@ -33,10 +35,11 @@ int main(int argc, char* argv[])
                     printf("\nnumber of vertices is: %d\n\n", numberOfVertices(argv[2]));
                 } else if (extra_strcmp(argv[4], "freeman") == 0) {
                     printf("\nFreeman Network Centrality is: %f\n\n", freemanNetworkCentrality(argv[2]));
+                } else if (extra_strcmp(argv[4], "closeness") == 0) {
+                    printf("\nplease wait for a while......\n");                    
+                    int node = extra_atoi(argv[5]);
+                    printf("\nCloseness Centrality of node_x is: %f\n\n", closenessCentrality(argv[2], node));
                 }
-                // else if (extra_strcmp(argv[4], "closeness") == 0) {
-                //     printf("%d", closenessCentrality(argv[2]));
-                // }
                 else {
                     printf("Invalid command!\nTry \"-h\" or \"--help\"\n\n");
                 }

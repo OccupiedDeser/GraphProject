@@ -101,3 +101,25 @@ float freemanNetworkCentrality(char name[])
     float degree_Centrality = (1.0 * node_num * maxCD - sumCD) / (1.0 * (node_num - 1) * (node_num - 2));
     return degree_Centrality;
 }
+
+float closenessCentrality(char name[], int node)
+{
+    float ret;
+    long long int sum = 0, count = 0;
+    AdjList* g = create_AL(name);
+    int* dist = (int*)malloc(g->n * sizeof(int));
+    int* path = (int*)malloc(g->n * sizeof(int));
+    Dijkstra(node, node, g, dist, path);
+    //把node作为v传入，使得Dijkstra不至于中途退出，能找到所有node可到达的点
+    for (int i = 0; i <= g->n; i++) {
+        if (dist[i] < INF) {
+            sum += dist[i];
+            count++;
+        }
+    }
+    ret = (float)(count - 1) / sum;     //sum中包含了dist值为0的点，即node本身
+    delete_AL(g);
+    free(dist);
+    free(path);
+    return ret;
+}

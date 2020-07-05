@@ -199,4 +199,4 @@ void draw_garlic()
     printf("                             ..;oxdxkxddxx0oxxo:.                         \n");
     printf("\n\n");
     return;
-}
+}               // made with programme *jp2a*

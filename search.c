@@ -250,8 +250,9 @@ char* shortestPath(int u, int v, char algorithm[], char name[])
         char* path = call_Dijk(u, v, g);
         return path;
     } else {
-        printf("ERROR: Invalid Algorithm\n");
-        return NULL;
+        char* ret = (char*)malloc(30 * sizeof(char));
+        extra_strcpy(ret, "ERROR: Invalid Algorithm\n\n");
+        return ret;
     }
 }
 
