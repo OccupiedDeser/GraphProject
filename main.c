@@ -36,11 +36,15 @@ int main(int argc, char* argv[])
                 } else if (extra_strcmp(argv[4], "freeman") == 0) {
                     printf("\nFreeman Network Centrality is: %f\n\n", freemanNetworkCentrality(argv[2]));
                 } else if (extra_strcmp(argv[4], "closeness") == 0) {
-                    printf("\nplease wait for a while......\n");                    
-                    int node = extra_atoi(argv[5]);
-                    printf("\nCloseness Centrality of node_x is: %f\n\n", closenessCentrality(argv[2], node));
-                }
-                else {
+                    printf("\nplease wait for a while......\n");
+                    if (argc > 5) {
+                        int node = extra_atoi(argv[5]);
+                        printf("\nCloseness Centrality of node %s is: %f\n\n", argv[5], closenessCentrality(argv[2], node));
+                    } else {
+                        printf("Invalid command!\nTry \"-h\" or \"--help\"\n\n");
+                    }
+
+                } else {
                     printf("Invalid command!\nTry \"-h\" or \"--help\"\n\n");
                 }
             } else if (extra_strcmp(argv[3], "-sp") == 0 || extra_strcmp(argv[3], "--shortestpath") == 0) {

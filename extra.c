@@ -56,7 +56,7 @@ void enQueue(int d, S_Queue* Q)
 {
     if (!isQueueFull(Q)) {
         Q->data[Q->rear] = d;
-        Q->rear++;
+        Q->rear = (Q->rear + 1) % MAXCAPACITY;
     } else {
         printf("满队队列");
     }
@@ -65,8 +65,9 @@ void enQueue(int d, S_Queue* Q)
 int deQueue(S_Queue* Q)
 {
     if (!isQueueEmpty(Q)) {
-        Q->front++;
-        return Q->data[Q->front - 1];
+        int r = Q->data[Q->front];
+        Q->front = (Q->front + 1) % MAXCAPACITY;
+        return r;
     } else {
         printf("空队列");
         int error = -1;

@@ -362,10 +362,6 @@ void AdjList_Split_Point(AdjList* graph)
     int i, count = graph->n;
     Arc *Arc_pointer, *newArc;
     for (i = 0; i <= count; i++) {
-        if (i == 21 || i == 67) {
-            i++;
-            i--;
-        }
         Arc_pointer = graph->adjlist[i].firstarc;
         //在邻接表的第count+1的位置上建立新的节点，建立原Arc_pointer的路径，权值为w-1，Arc_pointer与其建立权值为1的路径，
         while (Arc_pointer != NULL) {
@@ -385,6 +381,7 @@ void AdjList_Split_Point(AdjList* graph)
     count++;
 }
 
+//合并点
 void AdjList_Merge_Point(AdjList* graph)
 {
     Arc* Arc_pointer;
